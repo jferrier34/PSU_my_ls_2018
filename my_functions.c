@@ -60,3 +60,12 @@ int my_getnbr(char const *str)
     return (nb * isneg);
 
 }
+
+int my_strlen(char const *str)
+{
+    int nbr;
+
+    while (str[nbr] != '\0')
+        nbr++;
+    return (nbr);
+}

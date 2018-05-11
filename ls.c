@@ -5,78 +5,7 @@
 ** my_ls.c
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <pwd.h>
-#include <grp.h>
-#include <time.h>
 #include "./include/my.h"
-
-char *get_date(char *timeinfo, struct stat heure)
-{
-    for (int i = 9; i != 10; i++) {
-        my_putchar(timeinfo[i]);
-        my_putchar(' ');
-        for (int i = 4; i != 7; i++)
-            my_putchar(timeinfo[i]);
-            my_putchar('.');
-            for (int i = 10; i != 16; i++)
-                my_putchar(timeinfo[i]);
-                my_putchar(' ');
-                }
-    return (timeinfo);
-}
-
-void get_size(struct stat *info)
-{
-    my_put_nbr(info->st_size);
-    my_putchar('\t');
-}
-
-void get_nlink(struct stat *info)
-{
-    my_put_nbr(info->st_nlink);
-    my_putchar(' ');
-}
-
-void get_name(struct dirent *dir, struct stat *info)
-{
-    my_putstr(dir->d_name);
-    my_putchar(' ');
-    my_putchar('\n');
-}
-
-void get_pwd_name(struct stat *info, struct passwd *pwd)
-{
-    my_putstr(pwd->pw_name);
-    my_putchar(' ');
-}
-
-void get_gr_name(struct stat *info, struct group *group)
-{
-    my_putstr(group->gr_name);
-    my_putchar('\t');
-}
-
-void get_rights(struct stat *info)
-{
-    my_putstr((S_ISDIR(info->st_mode)) ? "d" : "-");
-    my_putstr((info->st_mode & S_IRUSR) ? "r" : "-");
-    my_putstr((info->st_mode & S_IWUSR) ? "w" : "-");
-    my_putstr((info->st_mode & S_IXUSR) ? "x" : "-");
-    my_putstr((info->st_mode & S_IRGRP) ? "r" : "-");
-    my_putstr((info->st_mode & S_IWGRP) ? "w" : "-");
-    my_putstr((info->st_mode & S_IXGRP) ? "x" : "-");
-    my_putstr((info->st_mode & S_IROTH) ? "r" : "-");
-    my_putstr((info->st_mode & S_IWOTH) ? "w" : "-");
-    my_putstr((info->st_mode & S_IXOTH) ? "x" : "-");
-    my_putstr(".");
-    my_putchar(' ');
-    }
 
 int get_total(struct stat *info)
 {
@@ -84,18 +13,49 @@ int get_total(struct stat *info)
     DIR *repertory = NULL;
     int cpt;
     int total = 0;
+    int len;
+    int i = 1;
     my_putstr("total: ");
     repertory = opendir(".");
     while (readfiles = readdir(repertory)) {
-        if (readfiles->d_name[0] != '.')
+        if (readfiles->d_name[0] != '.') {
+            len = my_strlen(readfiles->d_name);
+            readfiles->d_name[len + 1] = '\0';
             cpt = stat(readfiles->d_name, info);
-            total = total + info->st_size;
+            if (info->st_size < 1000)
+                total = total + 4;
+            else {
+		for (i = 1; info->st_size % 100 > 40; i++) {
+		    info->st_size = info->st_size - 4096;
+		}
+		total = total + (4 * i);
+	    }
+        }
     }
     my_put_nbr(total);
     my_putchar('\n');
     closedir(repertory);
     return (total);
 }
+
+/*int get_toto(struct stat *info)
+{
+    struct dirent *readfiles = NULL;
+    DIR *repertory = NULL;
+    int cpt1 = 0;
+    int cpt2 = 0;
+    int cpt3 = 0;
+    int cpt4 = 0;
+    my_putstr("total: ");
+    repertory = opendir(".");
+    while (readfiles = readdir(repertory)) {
+        if (info->st_size =< 4096)
+            cpt1 = cpt1 + 1;
+        if (info->st_size > 4096 && info->st_size <= 8096)
+            cpt2 = cpt2 + 1;
+        if (info->st_size >= )
+    }
+    }*/
 
 void display(struct dirent *dir, char *repertory, struct stat *info)
 {
@@ -118,6 +78,23 @@ void display(struct dirent *dir, char *repertory, struct stat *info)
     get_name(dir, info);
 }
 
+void ls_a()
+{
+    DIR *repertory = NULL;
+    struct dirent *readfiles;
+    repertory = opendir(".");
+
+    if (repertory != NULL) {
+    while ((readfiles = readdir(repertory))) {
+        if (readfiles->d_name[2] != '.') {
+            my_putstr(readfiles->d_name);
+            my_putstr("\t");
+        }
+    }
+    closedir(repertory);
+  }
+}
+
 int ls_l(void)
 {
     DIR *repertory = NULL;
@@ -136,7 +113,7 @@ int ls_l(void)
 void ls(DIR *repertory, struct dirent *readfiles)
 {
     repertory = opendir(".");
-if (repertory == NULL)
+    if (repertory == NULL)
         exit(1);
     while ((readfiles = readdir(repertory)) != NULL) {
         if (readfiles->d_name[0] != '.') {
@@ -160,5 +137,7 @@ int main(int argc, char *argv[])
         ls(repertory, readfiles);
     if (argc == 2)
         ls_l();
+    if (argc == 3)
+        ls_a();
     return (0);
 }

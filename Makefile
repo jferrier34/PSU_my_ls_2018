@@ -1,3 +1,4 @@
+
 ##
 ## EPITECH PROJECT, 2018
 ## Makefile
@@ -5,9 +6,10 @@
 ## Makefile
 ##
 
-SRC	=	my_functions.c		\
-		my_functions2.c	\
-		ls.c
+SRC	= my_functions.c \
+	my_functions2.c \
+	my_functions3.c \
+	ls.c
 
 OBJ	=	$(SRC:.c=.o)
 
