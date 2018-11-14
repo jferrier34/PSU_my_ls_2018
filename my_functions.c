@@ -2,14 +2,14 @@
 ** EPITECH PROJECT, 2018
 ** my_functions.c
 ** File description:
-**
+** my_functions.c
 */
 
 #include <unistd.h>
 
 void my_putchar(char c)
 {
-    write(1,&c,1);
+    write(1, &c, 1);
 }
 
 int my_putstr(char *str)
@@ -17,10 +17,10 @@ int my_putstr(char *str)
     int nbr = 0;
     int a = 0;
 
-    while(str[nbr] != '\0') {
+    while (str[nbr] != '\0') {
         nbr++;
     }
-    while( a < nbr) {
+    while (a < nbr) {
         my_putchar(str[a]);
         a++;
     }

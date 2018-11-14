@@ -5,17 +5,18 @@
 ## Makefile
 ##
 
-SRC	=	my_functions.c	\
-		my_ls.c
+SRC	=	my_functions.c		\
+		my_functions2.c	\
+		ls.c
 
-OBJ     =       $(SRC:.c=.o)
+OBJ	=	$(SRC:.c=.o)
 
-NAME    =       my_ls
+NAME	=	my_ls
 
 all: $(NAME)
 
 $(NAME):	$(OBJ)
-		gcc -o $(NAME) $(OBJ)
+	gcc -o $(NAME) $(OBJ)
 
 clean:
 	rm -f $(OBJ)
