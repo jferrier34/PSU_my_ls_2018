@@ -30,11 +30,11 @@ char *get_date(char *timeinfo, struct stat heure)
     }
     my_putchar(' ');
     for (int i = 4; i != 7; i++) {
-         my_putchar(timeinfo[i]);
+        my_putchar(timeinfo[i]);
     }
     my_putchar('.');
     for (int i = 10; i != 16; i++) {
-         my_putchar(timeinfo[i]);
+        my_putchar(timeinfo[i]);
     }
     my_putchar(' ');
     return (timeinfo);

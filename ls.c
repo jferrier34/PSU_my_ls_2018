@@ -7,56 +7,6 @@
 
 #include "./include/my.h"
 
-int get_total(struct stat *info)
-{
-    struct dirent *readfiles = NULL;
-    DIR *repertory = NULL;
-    int cpt;
-    int total = 0;
-    int len;
-    int i = 1;
-    my_putstr("total: ");
-    repertory = opendir(".");
-    while (readfiles = readdir(repertory)) {
-        if (readfiles->d_name[0] != '.') {
-            len = my_strlen(readfiles->d_name);
-            readfiles->d_name[len + 1] = '\0';
-            cpt = stat(readfiles->d_name, info);
-            if (info->st_size < 1000)
-                total = total + 4;
-            else {
-		for (i = 1; info->st_size % 100 > 40; i++) {
-		    info->st_size = info->st_size - 4096;
-		}
-		total = total + (4 * i);
-	    }
-        }
-    }
-    my_put_nbr(total);
-    my_putchar('\n');
-    closedir(repertory);
-    return (total);
-}
-
-/*int get_toto(struct stat *info)
-{
-    struct dirent *readfiles = NULL;
-    DIR *repertory = NULL;
-    int cpt1 = 0;
-    int cpt2 = 0;
-    int cpt3 = 0;
-    int cpt4 = 0;
-    my_putstr("total: ");
-    repertory = opendir(".");
-    while (readfiles = readdir(repertory)) {
-        if (info->st_size =< 4096)
-            cpt1 = cpt1 + 1;
-        if (info->st_size > 4096 && info->st_size <= 8096)
-            cpt2 = cpt2 + 1;
-        if (info->st_size >= )
-    }
-    }*/
-
 void display(struct dirent *dir, char *repertory, struct stat *info)
 {
     struct stat heure;
@@ -76,23 +26,6 @@ void display(struct dirent *dir, char *repertory, struct stat *info)
     get_size(info);
     get_date(timeinfo, heure);
     get_name(dir, info);
-}
-
-void ls_a()
-{
-    DIR *repertory = NULL;
-    struct dirent *readfiles;
-    repertory = opendir(".");
-
-    if (repertory != NULL) {
-    while ((readfiles = readdir(repertory))) {
-        if (readfiles->d_name[2] != '.') {
-            my_putstr(readfiles->d_name);
-            my_putstr("\t");
-        }
-    }
-    closedir(repertory);
-  }
 }
 
 int ls_l(void)
@@ -126,7 +59,22 @@ void ls(DIR *repertory, struct dirent *readfiles)
         exit(84);
 }
 
-int main(int argc, char *argv[])
+int ls_ac_two(char **argv)
+{
+    if (argv[1][0] == '-') {
+        if ((argv[1][1] == 'l' && argv[1][2] == 't') ||
+            (argv[1][1] == 't' && argv[1][2] == 'l'))
+            ls_tl();
+        if (argv[1][1] == 'l' && argv[1][2] == '\0')
+            ls_l();
+        if (argv[1][1] == 't' && argv[1][2] == '\0')
+            ls_t();
+    } else {
+        exit (84);
+    }
+}
+
+int main(int argc, char **argv)
 {
     struct dirent *dir;
     DIR *repertory = opendir(".");
@@ -136,8 +84,9 @@ int main(int argc, char *argv[])
     if (argc == 1)
         ls(repertory, readfiles);
     if (argc == 2)
-        ls_l();
+        ls_ac_two(argv);
     if (argc == 3)
         ls_a();
     return (0);
 }
+

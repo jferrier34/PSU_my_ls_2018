@@ -30,5 +30,10 @@ void get_name(struct dirent *dir, struct stat *info);
 void get_pwd_name(struct stat *info, struct passwd *pwd);
 void get_gr_name(struct stat *info, struct group *group);
 int my_strlen(char const *str);
+int get_total(struct stat *info);
+int ls_t(void);
+int ls_tl(void);
+void ls_a(void);
+
 #endif
 

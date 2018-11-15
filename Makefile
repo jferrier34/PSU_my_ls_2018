@@ -9,6 +9,7 @@
 SRC	= my_functions.c \
 	my_functions2.c \
 	my_functions3.c \
+	options.c \
 	ls.c
 
 OBJ	=	$(SRC:.c=.o)
