@@ -6,6 +6,7 @@
 */
 
 #include "./include/my.h"
+#include <string.h>
 
 void display(struct dirent *dir, char *repertory, struct stat *info)
 {
@@ -39,24 +40,7 @@ int ls_l(void)
     while (readfiles = readdir(repertory))
     if (readfiles->d_name[0] != '.')
         display(readfiles, readfiles->d_name, &info);
-
     return (0);
-}
-
-void ls(DIR *repertory, struct dirent *readfiles)
-{
-    repertory = opendir(".");
-    if (repertory == NULL)
-        exit(1);
-    while ((readfiles = readdir(repertory)) != NULL) {
-        if (readfiles->d_name[0] != '.') {
-            my_putstr(readfiles->d_name);
-            my_putchar(' ');
-            my_putchar('\n');
-        }
-    }
-    if (closedir(repertory) == - 1)
-        exit(84);
 }
 
 int ls_ac_two(char **argv)
@@ -82,7 +66,7 @@ int main(int argc, char **argv)
     struct stat info;
 
     if (argc == 1)
-        ls(repertory, readfiles);
+        ls_alpha();
     if (argc == 2)
         ls_ac_two(argv);
     if (argc == 3)
