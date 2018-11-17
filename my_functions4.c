@@ -47,7 +47,7 @@ int sorting(char **array)
         }
     }
     return (1);
-    }
+}
 
 void my_sort_word_array(char **array)
 {

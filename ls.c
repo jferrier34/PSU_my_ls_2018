@@ -54,7 +54,7 @@ int ls_ac_two(char **argv)
         if (argv[1][1] == 't' && argv[1][2] == '\0')
             ls_t();
     } else {
-        exit (84);
+        ls_alpha(argv[1]);
     }
 }
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     struct stat info;
 
     if (argc == 1)
-        ls_alpha();
+        ls_alpha(".");
     if (argc == 2)
         ls_ac_two(argv);
     if (argc == 3)

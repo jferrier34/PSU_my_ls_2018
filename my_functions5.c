@@ -15,16 +15,16 @@ void funct(struct stat *info, int *total)
     int i = 1;
 
     if (info->st_size < 1000)
-                *total = *total + 4;
-            else {
-                for (i; info->st_size  > 4096; i++) {
+        *total = *total + 4;
+        else {
+            for (i; info->st_size  > 4096; i++) {
                     info->st_size = info->st_size - 4096;
                 }
                 *total = *total + (4 * i);
                 }
 }
 
-int ls_alpha(void)
+int ls_alpha(char *path)
 {
     int cpt = 0;
     int i;
@@ -32,7 +32,7 @@ int ls_alpha(void)
     struct dirent *readfiles = NULL;
     DIR *repertory = NULL;
 
-    repertory = opendir(".");
+    repertory = opendir(path);
     while ((readfiles = readdir(repertory))) {
         my_tab[cpt] = (char *) malloc(sizeof(readfiles->d_name) + 1);
         my_strcpy(my_tab[cpt++], readfiles->d_name);
