@@ -24,15 +24,42 @@ void ls_a(void)
     }
 }
 
-int ls_t(void)
-{
-    my_putchar ('t');
-    return 0;
-}
-
 int ls_tl(void)
 {
-    my_putstr("tl");
+    my_putstr("o");
     return 0;
 }
 
+int my_putstr(char *str)
+{
+    int nbr = 0;
+    int a = 0;
+
+    while (str[nbr] != '\0') {
+        nbr++;
+    }
+    while (a < nbr) {
+        my_putchar(str[a]);
+        a++;
+    }
+}
+
+char *path_gen(char *a, char *b)
+{
+    char *ret = malloc(my_strlen(a) + my_strlen(b) + 3);
+    char *s = ret;
+    for (; *a; a++){
+        *ret = *a;
+        ret++;
+    }
+    if (*(ret - 1) != '/'){
+        *ret = '/';
+        ret++;
+    }
+    for (; *b; b++){
+        *ret = *b;
+        ret++;
+    }
+    *ret = 0;
+    return (s);
+}

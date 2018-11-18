@@ -12,20 +12,6 @@ void my_putchar(char c)
     write(1, &c, 1);
 }
 
-int my_putstr(char *str)
-{
-    int nbr = 0;
-    int a = 0;
-
-    while (str[nbr] != '\0') {
-        nbr++;
-    }
-    while (a < nbr) {
-        my_putchar(str[a]);
-        a++;
-    }
-}
-
 int my_put_nbr(int nb)
 {
     if (nb >= 10)
@@ -68,4 +54,13 @@ int my_strlen(char const *str)
     while (str[nbr] != '\0')
         nbr++;
     return (nbr);
+}
+
+int my_charlen(char **str)
+{
+    int cpt;
+
+    while (str[cpt] != NULL)
+        cpt++;
+    return (cpt);
 }

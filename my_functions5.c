@@ -47,3 +47,60 @@ int ls_alpha(char *path)
     closedir (repertory);
     return (0);
 }
+
+char *my_strdup(char *b)
+{
+    char *ret = malloc(my_strlen(b) + 1);
+    int i = 0;
+
+    for (; b[i]; i++)
+        ret[i] = b[i];
+        ret[i] = 0;
+    return (ret);
+}
+
+int ls_path(char *path)
+{
+    DIR *repertory = NULL;
+    struct dirent *readfiles = NULL;
+    struct stat info;
+    char **ret = malloc(sizeof(char *) * 256);
+    char **s = ret;
+
+    repertory = opendir(path);
+    while (readfiles = readdir(repertory)){
+        if (readfiles->d_name[0] != '.'){
+            *ret = my_strdup(readfiles->d_name);
+            ret++;
+        }
+    }
+    *ret = NULL;
+    my_sort_word_array(s);
+    for (; *s; s++)
+        display(readfiles, *s, &info, path);
+    return (0);
+}
+
+int ls_r(char *path)
+{
+    int cpt2 = 0;
+    int i;
+    char **my_tab2 = malloc(sizeof(char *) * 100);
+    struct dirent *readfiles = NULL;
+    DIR *repertory = NULL;
+
+    repertory = opendir(path);
+    while ((readfiles = readdir(repertory))) {
+        my_tab2[cpt2] = (char *) malloc(sizeof(readfiles->d_name) + 1);
+        my_strcpy(my_tab2[cpt2], readfiles->d_name);
+        cpt2 = cpt2 + 1;
+    }
+    my_sort_word_array(my_tab2);
+    for (i = my_charlen(my_tab2) - 1; i > 0; i--) {
+        if (my_tab2[i][0] != '.') {
+            my_putstr(my_tab2[i]);
+            my_putchar('\n');
+        }
+    }
+    closedir (repertory);
+}
