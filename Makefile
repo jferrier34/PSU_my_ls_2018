@@ -14,6 +14,7 @@ SRC	= my_functions.c \
 	options.c \
 	ls.c
 
+CFLAGS	=	-g3
 OBJ	=	$(SRC:.c=.o)
 
 NAME	=	my_ls

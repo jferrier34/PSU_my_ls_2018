@@ -27,18 +27,19 @@ void funct(struct stat *info, int *total)
 int ls_alpha(char *path)
 {
     int cpt = 0;
-    int i;
     char **my_tab = malloc(sizeof(char *) * 100);
     struct dirent *readfiles = NULL;
     DIR *repertory = NULL;
 
     repertory = opendir(path);
+    if (repertory == NULL)
+        return (0);
     while ((readfiles = readdir(repertory))) {
         my_tab[cpt] = (char *) malloc(sizeof(readfiles->d_name) + 1);
         my_strcpy(my_tab[cpt++], readfiles->d_name);
     }
     my_sort_word_array(my_tab);
-    for (i = 0; i < cpt; i++) {
+    for (int i = 0; i < cpt; i++) {
         if (my_tab[i][0] != '.') {
             my_putstr(my_tab[i]);
             my_putchar('\n');
